@@ -1,2 +1,8 @@
-2017-12-09 12:25:31,640   ERROR -  Mensaje The Network Adapter could not establish the connection - null
-2017-12-09 12:31:30,283   ERROR -  Mensaje The Network Adapter could not establish the connection - null
+2017-12-09 19:01:12,449   ERROR -  Mensaje ORA-20002: Los 4 primeros caracteres de la matricula tiene que ser un numero
+ORA-06512: at "ASEGURADORA.COMPROBAR_MATRICULA", line 5
+ORA-04088: error during execution of trigger 'ASEGURADORA.COMPROBAR_MATRICULA'
+ - insert into coche(COCHE_ID,MATRICULA,MARCA,MODELO,EXTRAS,CILINDRADA,ANO,NUMERO_BASTIDOR,PRECIO_MERCADO) values(COCHE_SEQ.NEXTVAL,?,?,?,?,?,?,?,?)
+2017-12-09 19:03:09,057   ERROR -  Mensaje ORA-06502: PL/SQL: numeric or value error
+ORA-06512: at "ASEGURADORA.COMPROBAR_MATRICULA", line 2
+ORA-04088: error during execution of trigger 'ASEGURADORA.COMPROBAR_MATRICULA'
+ - insert into coche(COCHE_ID,MATRICULA,MARCA,MODELO,EXTRAS,CILINDRADA,ANO,NUMERO_BASTIDOR,PRECIO_MERCADO) values(COCHE_SEQ.NEXTVAL,?,?,?,?,?,?,?,?)

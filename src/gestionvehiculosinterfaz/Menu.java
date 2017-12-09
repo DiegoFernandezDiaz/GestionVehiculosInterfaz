@@ -11,6 +11,7 @@ import gestionvehiculos.GestionVehiculos;
 import gestionvehiculos.Parte;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Scanner;
 import org.apache.log4j.PropertyConfigurator;
@@ -35,7 +36,7 @@ public class Menu {
         do
         {
             System.out.println("1. Gestion de Coches");
-            System.out.println("2. Gestion de Ventas");
+            System.out.println("2. Gestion de Partes");
             System.out.println("3. Salir");
             opcion = teclado.nextInt();
             
@@ -95,14 +96,10 @@ public class Menu {
         PropertyConfigurator.configure("maniobra\\log4j.properties");
         org.apache.log4j.Logger loggerTRACE = org.apache.log4j.LogManager.getLogger("TRACE");
         loggerTRACE.trace("crear coche");
-        
         Coche c;
-        //SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        //Date fMatricula=null;
         int repeticion=1;
         while(repeticion==1)
         {
-            
             System.out.print("Introduzca la matricula del coche: ");
             teclado.next();
             String matricula= teclado.nextLine();
@@ -115,15 +112,15 @@ public class Menu {
             System.out.print("Introduzca la cilindrada del coche: ");
             String cilindrada= teclado.nextLine();
             while (!esEntero(cilindrada)) {
-            System.out.print("Dato erróneo. Introduce de nuevo la cilindrada del coche: ");
-            cilindrada = teclado.nextLine();
+                System.out.print("Dato erróneo. Introduce de nuevo la cilindrada del coche: ");
+                cilindrada = teclado.nextLine();
             }
             int cc = Integer.parseInt(cilindrada);
             System.out.print("introduzca el año del coche: ");
             String año = teclado.nextLine();
             while (!esEntero(año)) {
-            System.out.print("Dato erróneo. Introduce de nuevo el ID del coche: ");
-            año = teclado.nextLine();
+                System.out.print("Dato erróneo. Introduce de nuevo el ID del coche: ");
+                año = teclado.nextLine();
             }
             int añoc = Integer.parseInt(año);
             System.out.print("Introduzca el numero de bastidor del coche: ");
@@ -131,38 +128,25 @@ public class Menu {
             System.out.print("introduzca el precio de mercado del coche: ");
             String precio = teclado.nextLine();
             while (!esEntero(precio)) {
-            System.out.print("Dato erróneo. Introduce de nuevo el ID del coche: ");
-            precio = teclado.nextLine();
+                System.out.print("Dato erróneo. Introduce de nuevo el ID del coche: ");
+                precio = teclado.nextLine();
             }
             int precioMercado = Integer.parseInt(precio);
-            /*System.out.print("Introduzca la fecha de matriculacion del coche(yyyy-MM-dd): ");
-            String fMatri= teclado.nextLine();
-            while (!esFecha(fMatri)) {
-            System.out.print("Dato erróneo. Introduce de nuevo la fecha de matriculacion: ");
-            fMatri = teclado.nextLine();
-            }
-            try {
-                fMatricula = sdf.parse(fMatri);
-            } catch (ParseException e) {
-            }*/
-            
-            
             c = new Coche(0, matricula, marca, modelo, extras, cc, añoc, numBastidor, precioMercado);
             try {
-                System.out.println("Coches introducidos"+gs.insertarCoche(c));
+                System.out.println("Coches introducidos "+gs.insertarCoche(c));
             } catch (ExcepcionGestionVehiculos ex) {
                 System.out.println(ex.getMensajeErrorUsuario());
                 PropertyConfigurator.configure("maniobra\\log4j.properties");
                 org.apache.log4j.Logger loggerERROR = org.apache.log4j.LogManager.getLogger("ERROR");
                 loggerERROR.error(" Mensaje " + ex.getMensajeErrorSistema()+ " - " + ex.getSentenciaSQL()); 
             }
-            //GestionVehiculos.
             System.out.println("¿Quieres introducir mas coches?(s/n): ");
             String respuesta = teclado.nextLine();
             respuesta= respuesta.toLowerCase();
             while (!esRepuesta(respuesta)) {
-            System.out.print("Dato erróneo. Introduce una 's' si es si o una 'n' si es no: ");
-            respuesta = teclado.nextLine();
+                System.out.print("Dato erróneo. Introduce una 's' si es si o una 'n' si es no: ");
+                respuesta = teclado.nextLine();
             }
             if(respuesta.charAt(0) == 's')
             {
@@ -172,10 +156,7 @@ public class Menu {
                 repeticion=0;
             }
         }
-        //Escribir los datos de todos los coches
-        
     }
-    
     
     private void eliminarCoche()
     {
@@ -188,26 +169,24 @@ public class Menu {
             System.out.print("introduzca el ID del coche a eliminar: ");
             String id= teclado.nextLine();
             while (!esEntero(id)) {
-            System.out.print("Dato erróneo. Introduce de nuevo el ID del coche a eliminar: ");
-            id = teclado.nextLine();
+                System.out.print("Dato erróneo. Introduce de nuevo el ID del coche a eliminar: ");
+                id = teclado.nextLine();
             }
             int idCoche = Integer.parseInt(id);
-            
             try {
-                gs.borrarCoche(idCoche);
+                gs.eliminarCoche(idCoche);
             } catch (ExcepcionGestionVehiculos ex) {
                 System.out.println(ex.getMensajeErrorUsuario());
                 PropertyConfigurator.configure("maniobra\\log4j.properties");
                 org.apache.log4j.Logger loggerERROR = org.apache.log4j.LogManager.getLogger("ERROR");
                 loggerERROR.error(" Mensaje " + ex.getMensajeErrorSistema()+ " - " + ex.getSentenciaSQL()); 
             }
-            //GestionVehiculos.
             System.out.println("¿Quieres eliminar mas coches?(s/n): ");
             String respuesta = teclado.nextLine();
             respuesta= respuesta.toLowerCase();
             while (!esRepuesta(respuesta)) {
-            System.out.print("Dato erróneo. Introduce una 's' si es si o una 'n' si es no: ");
-            respuesta = teclado.nextLine();
+                System.out.print("Dato erróneo. Introduce una 's' si es si o una 'n' si es no: ");
+                respuesta = teclado.nextLine();
             }
             if(respuesta.charAt(0) == 's')
             {
@@ -218,6 +197,7 @@ public class Menu {
             }
         }
     }
+    
     private void modificarCoche()
     {
         PropertyConfigurator.configure("maniobra\\log4j.properties");
@@ -230,8 +210,8 @@ public class Menu {
             System.out.print("introduzca el ID del coche a modificar: ");
             String id= teclado.nextLine();
             while (!esEntero(id)) {
-            System.out.print("Dato erróneo. Introduce de nuevo el ID del coche a modificar: ");
-            id = teclado.nextLine();
+                System.out.print("Dato erróneo. Introduce de nuevo el ID del coche a modificar: ");
+                id = teclado.nextLine();
             }
             int idCoche = Integer.parseInt(id);
             System.out.print("Introduzca la matricula del coche: ");
@@ -245,15 +225,15 @@ public class Menu {
             System.out.print("Introduzca la cilindrada del coche: ");
             String cilindrada= teclado.nextLine();
             while (!esEntero(cilindrada)) {
-            System.out.print("Dato erróneo. Introduce de nuevo la cilindrada del coche: ");
-            cilindrada = teclado.nextLine();
+                System.out.print("Dato erróneo. Introduce de nuevo la cilindrada del coche: ");
+                cilindrada = teclado.nextLine();
             }
             int cc = Integer.parseInt(cilindrada);
             System.out.print("introduzca el año del coche: ");
             String año = teclado.nextLine();
             while (!esEntero(año)) {
-            System.out.print("Dato erróneo. Introduce de nuevo el año del coche: ");
-            año = teclado.nextLine();
+                System.out.print("Dato erróneo. Introduce de nuevo el año del coche: ");
+                año = teclado.nextLine();
             }
             int añoc = Integer.parseInt(año);
             System.out.print("Introduzca el numero de bastidor del coche: ");
@@ -261,15 +241,11 @@ public class Menu {
             System.out.print("introduzca el precio de mercado del coche: ");
             String precio = teclado.nextLine();
             while (!esEntero(precio)) {
-            System.out.print("Dato erróneo. Introduce de nuevo el precio de mercado del coche: ");
-            precio = teclado.nextLine();
+                System.out.print("Dato erróneo. Introduce de nuevo el precio de mercado del coche: ");
+                precio = teclado.nextLine();
             }
             int precioMercado = Integer.parseInt(precio);
-            
-            
-            
             c = new Coche(idCoche, matricula, marca, modelo, extras, cc, añoc, numBastidor, precioMercado);
-            
             try {
                 gs.modificarCoche(idCoche,c);
             } catch (ExcepcionGestionVehiculos ex) {
@@ -278,13 +254,12 @@ public class Menu {
                 org.apache.log4j.Logger loggerERROR = org.apache.log4j.LogManager.getLogger("ERROR");
                 loggerERROR.error(" Mensaje " + ex.getMensajeErrorSistema()+ " - " + ex.getSentenciaSQL()); 
             }
-            //GestionVehiculos.
             System.out.println("¿Quieres modificar mas coches?(s/n): ");
             String respuesta = teclado.nextLine();
             respuesta= respuesta.toLowerCase();
             while (!esRepuesta(respuesta)) {
-            System.out.print("Dato erróneo. Introduce una 's' si es si o una 'n' si es no: ");
-            respuesta = teclado.nextLine();
+                System.out.print("Dato erróneo. Introduce una 's' si es si o una 'n' si es no: ");
+                respuesta = teclado.nextLine();
             }
             if(respuesta.charAt(0) == 's')
             {
@@ -306,27 +281,29 @@ public class Menu {
             System.out.print("introduzca el ID del coche a buscar: ");
             String id= teclado.nextLine();
             while (!esEntero(id)) {
-            System.out.print("Dato erróneo. Introduce de nuevo el ID del coche a buscar: ");
-            id = teclado.nextLine();
+                System.out.print("Dato erróneo. Introduce de nuevo el ID del coche a buscar: ");
+                id = teclado.nextLine();
             }
             int idCoche = Integer.parseInt(id);
             
             try {
-                //sou print con los datos de la lista
-                gs.leerCoche(idCoche);
+                Coche c =gs.leerCoche(idCoche);
+                System.out.println(String.format("%9s %9s %9s %9s %9s %9s %9s %9s %9s ", 
+                    "ID", "Matricula", "marca", "modelo", "extras", "cilindrada", "año" ,"numero_Bastidor", "Precio_mercado")); 
+                System.out.println(String.format("%9s %9s %9s %9s %9s %9s %9s %9s %9s ",
+                        c.getCocheId(),c.getMatricula(),c.getMarca(),c.getModelo(),c.getExtras(),c.getCilintrada(),c.getAño(),c.getNumBastidor(),c.getPrecioMercado()));
             } catch (ExcepcionGestionVehiculos ex) {
                 System.out.println(ex.getMensajeErrorUsuario());
                 PropertyConfigurator.configure("maniobra\\log4j.properties");
                 org.apache.log4j.Logger loggerERROR = org.apache.log4j.LogManager.getLogger("ERROR");
                 loggerERROR.error(" Mensaje " + ex.getMensajeErrorSistema()+ " - " + ex.getSentenciaSQL()); 
             }
-            //GestionVehiculos.
             System.out.println("¿Quieres buscar mas coches?(s/n): ");
             String respuesta = teclado.nextLine();
             respuesta= respuesta.toLowerCase();
             while (!esRepuesta(respuesta)) {
-            System.out.print("Dato erróneo. Introduce una 's' si es si o una 'n' si es no: ");
-            respuesta = teclado.nextLine();
+                System.out.print("Dato erróneo. Introduce una 's' si es si o una 'n' si es no: ");
+                respuesta = teclado.nextLine();
             }
             if(respuesta.charAt(0) == 's')
             {
@@ -342,16 +319,25 @@ public class Menu {
         PropertyConfigurator.configure("maniobra\\log4j.properties");
         org.apache.log4j.Logger loggerTRACE = org.apache.log4j.LogManager.getLogger("TRACE");
         loggerTRACE.trace("mostrar coches");
+        ArrayList<Coche> listacoches = new ArrayList();
         try {
+            listacoches.addAll(gs.leerCoches());
+            System.out.println(String.format("%9s %9s %9s %9s %9s %9s %9s %9s %9s ", 
+                    "ID", "Matricula", "marca", "modelo", "extras", "cilindrada", "año" ,"numero_Bastidor", "Precio_mercado")); 
+            for (Coche c : listacoches) {
+                System.out.println(String.format("%9s %9s %9s %9s %9s %9s %9s %9s %9s ",
+                        c.getCocheId(),c.getMatricula(),c.getMarca(),c.getModelo(),c.getExtras(),c.getCilintrada(),c.getAño(),c.getNumBastidor(),c.getPrecioMercado()));
+            }
+            
             //sou print con los datos de la lista
-            gs.leerCoches();
+            
         } catch (ExcepcionGestionVehiculos ex) {
             System.out.println(ex.getMensajeErrorUsuario());
-                PropertyConfigurator.configure("maniobra\\log4j.properties");
-                org.apache.log4j.Logger loggerERROR = org.apache.log4j.LogManager.getLogger("ERROR");
-                loggerERROR.error(" Mensaje " + ex.getMensajeErrorSistema()+ " - " + ex.getSentenciaSQL()); 
+            PropertyConfigurator.configure("maniobra\\log4j.properties");
+            org.apache.log4j.Logger loggerERROR = org.apache.log4j.LogManager.getLogger("ERROR");
+            loggerERROR.error(" Mensaje " + ex.getMensajeErrorSistema()+ " - " + ex.getSentenciaSQL()); 
         }
-        System.out.println("%2s %s %9s %s \n, ID Matricula ");
+        
     }
     private void menuPartes()
     {
@@ -363,7 +349,7 @@ public class Menu {
             System.out.println("2. Eliminar");
             System.out.println("3. Modificar");
             System.out.println("4. Buscar");
-            System.out.println("5. Mostrar todos las ventas");
+            System.out.println("5. Mostrar todos los partes");
             System.out.println("6. Volver");
             opcion = teclado.nextInt();
             
@@ -400,50 +386,42 @@ public class Menu {
         Date fecha=null;
         int repeticion=1;
         while(repeticion==1)
-        {
-//            System.out.print("introduzca el ID del coche: ");
-//            String id= teclado.nextLine();
-//            while (!esEntero(id)) {
-//            System.out.print("Dato erróneo. Introduce de nuevo el ID del coche: ");
-//            id = teclado.nextLine();
-//            }
-//            int idCoche = Integer.parseInt(id);
+        {  
             System.out.print("Introduzca el codigo del parte: ");
             String codigo= teclado.nextLine();
             System.out.print("Introduzca la fecha del parte(yyyy-MM-dd): ");
-            String fMatri= teclado.nextLine();
-            while (!esFecha(fMatri)) {
-            System.out.print("Dato erróneo. Introduce de nuevo la fecha del parte: ");
-            fMatri = teclado.nextLine();
+            String fParte= teclado.nextLine();
+            while (!esFecha(fParte)) {
+                System.out.print("Dato erróneo. Introduce de nuevo la fecha del parte: ");
+                fParte = teclado.nextLine();
             }
             try {
-                fecha = sdf.parse(fMatri);
+                fecha = sdf.parse(fParte);
             } catch (ParseException e) {
             }
             System.out.print("introduzca ID del coche: ");
             String cId = teclado.nextLine();
             while (!esEntero(cId)) {
-            System.out.print("Dato erróneo. Introduce de nuevo el ID del coche: ");
-            cId = teclado.nextLine();
+                System.out.print("Dato erróneo. Introduce de nuevo el ID del coche: ");
+                cId = teclado.nextLine();
             }
             int cocheId = Integer.parseInt(cId);
             c = new Coche(cocheId,null,null, null, null, 0, 0, null,0);
             p = new Parte(0, codigo, fecha, c);
             try {
-                gs.InsertarParte(p);
+                gs.insertarParte(p);
             } catch (ExcepcionGestionVehiculos ex) {
                 System.out.println(ex.getMensajeErrorUsuario());
                 PropertyConfigurator.configure("maniobra\\log4j.properties");
                 org.apache.log4j.Logger loggerERROR = org.apache.log4j.LogManager.getLogger("ERROR");
                 loggerERROR.error(" Mensaje " + ex.getMensajeErrorSistema()+ " - " + ex.getSentenciaSQL()); 
             }
-            //GestionVehiculos.
             System.out.println("¿Quieres introducir mas partes?(s/n): ");
             String respuesta = teclado.nextLine();
             respuesta= respuesta.toLowerCase();
             while (!esRepuesta(respuesta)) {
-            System.out.print("Dato erróneo. Introduce una 's' si es si o una 'n' si es no: ");
-            respuesta = teclado.nextLine();
+                System.out.print("Dato erróneo. Introduce una 's' si es si o una 'n' si es no: ");
+                respuesta = teclado.nextLine();
             }
             if(respuesta.charAt(0) == 's')
             {
@@ -466,26 +444,25 @@ public class Menu {
             System.out.print("introduzca el ID del parte: ");
             String id= teclado.nextLine();
             while (!esEntero(id)) {
-            System.out.print("Dato erróneo. Introduce de nuevo el ID del parte: ");
-            id = teclado.nextLine();
+                System.out.print("Dato erróneo. Introduce de nuevo el ID del parte: ");
+                id = teclado.nextLine();
             }
             int idParte = Integer.parseInt(id);
             
             try {
-                gs.EliminarParte(idParte);
+                gs.eliminarParte(idParte);
             } catch (ExcepcionGestionVehiculos ex) {
                 System.out.println(ex.getMensajeErrorUsuario());
                 PropertyConfigurator.configure("maniobra\\log4j.properties");
                 org.apache.log4j.Logger loggerERROR = org.apache.log4j.LogManager.getLogger("ERROR");
                 loggerERROR.error(" Mensaje " + ex.getMensajeErrorSistema()+ " - " + ex.getSentenciaSQL()); 
             }
-            //GestionVehiculos.
             System.out.println("¿Quieres introducir mas partes?(s/n): ");
             String respuesta = teclado.nextLine();
             respuesta= respuesta.toLowerCase();
             while (!esRepuesta(respuesta)) {
-            System.out.print("Dato erróneo. Introduce una 's' si es si o una 'n' si es no: ");
-            respuesta = teclado.nextLine();
+                System.out.print("Dato erróneo. Introduce una 's' si es si o una 'n' si es no: ");
+                respuesta = teclado.nextLine();
             }
             if(respuesta.charAt(0) == 's')
             {
@@ -511,8 +488,8 @@ public class Menu {
             System.out.print("introduzca el ID del parte: ");
             String id= teclado.nextLine();
             while (!esEntero(id)) {
-            System.out.print("Dato erróneo. Introduce de nuevo el ID del parte: ");
-            id = teclado.nextLine();
+                System.out.print("Dato erróneo. Introduce de nuevo el ID del parte: ");
+                id = teclado.nextLine();
             }
             int idParte = Integer.parseInt(id);
             System.out.print("Introduzca el codigo del parte: ");
@@ -520,8 +497,8 @@ public class Menu {
             System.out.print("Introduzca la fecha del parte(yyyy-MM-dd): ");
             String fMatri= teclado.nextLine();
             while (!esFecha(fMatri)) {
-            System.out.print("Dato erróneo. Introduce de nuevo la fecha del parte: ");
-            fMatri = teclado.nextLine();
+                System.out.print("Dato erróneo. Introduce de nuevo la fecha del parte: ");
+                fMatri = teclado.nextLine();
             }
             try {
                 fecha = sdf.parse(fMatri);
@@ -530,8 +507,8 @@ public class Menu {
             System.out.print("introduzca ID del coche: ");
             String cId = teclado.nextLine();
             while (!esEntero(cId)) {
-            System.out.print("Dato erróneo. Introduce de nuevo el ID del coche: ");
-            cId = teclado.nextLine();
+                System.out.print("Dato erróneo. Introduce de nuevo el ID del coche: ");
+                cId = teclado.nextLine();
             }
             int cocheId = Integer.parseInt(cId);
             c = new Coche(cocheId,null,null, null, null, 0, 0, null,0);
@@ -544,13 +521,12 @@ public class Menu {
                 org.apache.log4j.Logger loggerERROR = org.apache.log4j.LogManager.getLogger("ERROR");
                 loggerERROR.error(" Mensaje " + ex.getMensajeErrorSistema()+ " - " + ex.getSentenciaSQL()); 
             }
-            //GestionVehiculos.
             System.out.println("¿Quieres introducir mas partes?(s/n): ");
             String respuesta = teclado.nextLine();
             respuesta= respuesta.toLowerCase();
             while (!esRepuesta(respuesta)) {
-            System.out.print("Dato erróneo. Introduce una 's' si es si o una 'n' si es no: ");
-            respuesta = teclado.nextLine();
+                System.out.print("Dato erróneo. Introduce una 's' si es si o una 'n' si es no: ");
+                respuesta = teclado.nextLine();
             }
             if(respuesta.charAt(0) == 's')
             {
@@ -572,21 +548,23 @@ public class Menu {
             System.out.print("introduzca el ID del parte: ");
             String id= teclado.nextLine();
             while (!esEntero(id)) {
-            System.out.print("Dato erróneo. Introduce de nuevo el ID del parte: ");
-            id = teclado.nextLine();
+                System.out.print("Dato erróneo. Introduce de nuevo el ID del parte: ");
+                id = teclado.nextLine();
             }
             int idParte = Integer.parseInt(id);
-            
             try {
-                //sou print con los datos de la lista
-                gs.leerParte(idParte);
+                Parte p =gs.leerParte(idParte);
+                Coche c=p.getCocheId();
+                System.out.println(String.format("%9s %9s %9s %9s %9s %9s %9s %9s %9s %9s %9s %9s ", 
+                    "ID_parte","codigo","fecha","ID_coche", "Matricula", "marca", "modelo", "extras", "cilindrada", "año" ,"numero_Bastidor", "Precio_mercado")); 
+                System.out.println(String.format("%9s %9s %9s %9s %9s %9s %9s %9s %9s %9s %9s %9s ",
+                        p.getParteId(),p.getCodigo(),p.getFecha(),c.getCocheId(),c.getMatricula(),c.getMarca(),c.getModelo(),c.getExtras(),c.getCilintrada(),c.getAño(),c.getNumBastidor(),c.getPrecioMercado()));
             } catch (ExcepcionGestionVehiculos ex) {
                 System.out.println(ex.getMensajeErrorUsuario());
                 PropertyConfigurator.configure("maniobra\\log4j.properties");
                 org.apache.log4j.Logger loggerERROR = org.apache.log4j.LogManager.getLogger("ERROR");
                 loggerERROR.error(" Mensaje " + ex.getMensajeErrorSistema()+ " - " + ex.getSentenciaSQL()); 
             }
-            //GestionVehiculos.
             System.out.println("¿Quieres introducir mas partes?(s/n): ");
             String respuesta = teclado.nextLine();
             respuesta= respuesta.toLowerCase();
@@ -608,18 +586,23 @@ public class Menu {
         PropertyConfigurator.configure("maniobra\\log4j.properties");
         org.apache.log4j.Logger loggerTRACE = org.apache.log4j.LogManager.getLogger("TRACE");
         loggerTRACE.trace("mostrar parte");
-        {
+        ArrayList<Parte> listaPartes = new ArrayList();
+        Coche c= null;
         try {
-            //sou print con los datos de la lista
-            gs.leerPartes();
+            listaPartes.addAll(gs.leerPartes());
+            System.out.println(String.format("%9s %9s %9s %9s %9s %9s %9s %9s %9s %9s %9s %9s ", 
+                    "ID_parte","codigo","fecha","ID_coche", "Matricula", "marca", "modelo", "extras", "cilindrada", "año" ,"numero_Bastidor", "Precio_mercado")); 
+            for (Parte p : listaPartes) {
+                c=p.getCocheId();
+                System.out.println(String.format("%9s %9s %9s %9s %9s %9s %9s %9s %9s %9s %9s %9s ",
+                        p.getParteId(),p.getCodigo(),p.getFecha(),c.getCocheId(),c.getMatricula(),c.getMarca(),c.getModelo(),c.getExtras(),c.getCilintrada(),c.getAño(),c.getNumBastidor(),c.getPrecioMercado()));
+            }
         } catch (ExcepcionGestionVehiculos ex) {
             System.out.println(ex.getMensajeErrorUsuario());
-                PropertyConfigurator.configure("maniobra\\log4j.properties");
-                org.apache.log4j.Logger loggerERROR = org.apache.log4j.LogManager.getLogger("ERROR");
-                loggerERROR.error(" Mensaje " + ex.getMensajeErrorSistema()+ " - " + ex.getSentenciaSQL()); 
+            PropertyConfigurator.configure("maniobra\\log4j.properties");
+            org.apache.log4j.Logger loggerERROR = org.apache.log4j.LogManager.getLogger("ERROR");
+            loggerERROR.error(" Mensaje " + ex.getMensajeErrorSistema()+ " - " + ex.getSentenciaSQL()); 
         }
-        System.out.println("%2s %s %9s %s \n, ID Matricula ");
-    }
     }
     public static boolean esRepuesta(String s)
     {
