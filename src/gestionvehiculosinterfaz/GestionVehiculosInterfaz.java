@@ -5,6 +5,10 @@
  */
 package gestionvehiculosinterfaz;
 
+import gestionvehiculos.ExcepcionGestionVehiculos;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 
 /**
  *
@@ -16,6 +20,13 @@ public class GestionVehiculosInterfaz {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-    
+      Menu menu;
+        try {
+            menu = new Menu();
+            menu.menuPrincipal();
+        } catch (ExcepcionGestionVehiculos ex) {
+            Logger.getLogger(GestionVehiculosInterfaz.class.getName()).log(Level.SEVERE, null, ex);
+        }
+      
     }
 }

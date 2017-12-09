@@ -11,12 +11,8 @@ import gestionvehiculos.GestionVehiculos;
 import gestionvehiculos.Parte;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.LogManager;
-import java.util.logging.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
 /**
@@ -96,7 +92,9 @@ public class Menu {
     }
     private void crearCoche()
     {
-        //ArrayList<Coche> listaCoches = new ArrayList();
+        PropertyConfigurator.configure("maniobra\\log4j.properties");
+        org.apache.log4j.Logger loggerTRACE = org.apache.log4j.LogManager.getLogger("TRACE");
+        loggerTRACE.trace("crear coche");
         
         Coche c;
         //SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -104,14 +102,9 @@ public class Menu {
         int repeticion=1;
         while(repeticion==1)
         {
-            System.out.print("introduzca el ID del coche: ");
-            String id= teclado.nextLine();
-            while (!esEntero(id)) {
-            System.out.print("Dato erróneo. Introduce de nuevo el ID del coche: ");
-            id = teclado.nextLine();
-            }
-            int idCoche = Integer.parseInt(id);
+            
             System.out.print("Introduzca la matricula del coche: ");
+            teclado.next();
             String matricula= teclado.nextLine();
             System.out.print("Introduzca la marca del coche: ");
             String marca= teclado.nextLine();
@@ -154,13 +147,13 @@ public class Menu {
             }*/
             
             
-            c = new Coche(idCoche, matricula, marca, modelo, extras, cc, añoc, numBastidor, precioMercado);
+            c = new Coche(0, matricula, marca, modelo, extras, cc, añoc, numBastidor, precioMercado);
             try {
-                gs.insertarCoche(c);
+                System.out.println("Coches introducidos"+gs.insertarCoche(c));
             } catch (ExcepcionGestionVehiculos ex) {
                 System.out.println(ex.getMensajeErrorUsuario());
                 PropertyConfigurator.configure("maniobra\\log4j.properties");
-                Logger loggerERROR = LogManager.getLogger("ERROR");
+                org.apache.log4j.Logger loggerERROR = org.apache.log4j.LogManager.getLogger("ERROR");
                 loggerERROR.error(" Mensaje " + ex.getMensajeErrorSistema()+ " - " + ex.getSentenciaSQL()); 
             }
             //GestionVehiculos.
@@ -183,29 +176,12 @@ public class Menu {
         
     }
     
-    public static boolean esRepuesta(String s)
-    {
-        return s.charAt(0)=='s' || s.charAt(0)=='n';
-    }
-    public static boolean esEntero(String s) {
-        try { 
-            Integer.parseInt(s); 
-        } catch(NumberFormatException e) { 
-            return false; 
-        }
-        return true;
-    }
-    public static boolean esFecha(String s) {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        try { 
-            sdf.parse(s);
-        } catch (ParseException e) {
-            return false;
-        }
-        return true;
-    }
+    
     private void eliminarCoche()
     {
+        PropertyConfigurator.configure("maniobra\\log4j.properties");
+        org.apache.log4j.Logger loggerTRACE = org.apache.log4j.LogManager.getLogger("TRACE");
+        loggerTRACE.trace("eliminar coche");
         int repeticion=1;
         while(repeticion==1)
         {
@@ -222,7 +198,7 @@ public class Menu {
             } catch (ExcepcionGestionVehiculos ex) {
                 System.out.println(ex.getMensajeErrorUsuario());
                 PropertyConfigurator.configure("maniobra\\log4j.properties");
-                Logger loggerERROR = LogManager.getLogger("ERROR");
+                org.apache.log4j.Logger loggerERROR = org.apache.log4j.LogManager.getLogger("ERROR");
                 loggerERROR.error(" Mensaje " + ex.getMensajeErrorSistema()+ " - " + ex.getSentenciaSQL()); 
             }
             //GestionVehiculos.
@@ -244,6 +220,9 @@ public class Menu {
     }
     private void modificarCoche()
     {
+        PropertyConfigurator.configure("maniobra\\log4j.properties");
+        org.apache.log4j.Logger loggerTRACE = org.apache.log4j.LogManager.getLogger("TRACE");
+        loggerTRACE.trace("modificar coche");
         Coche c;
         int repeticion=1;
         while(repeticion==1)
@@ -296,7 +275,7 @@ public class Menu {
             } catch (ExcepcionGestionVehiculos ex) {
                 System.out.println(ex.getMensajeErrorUsuario());
                 PropertyConfigurator.configure("maniobra\\log4j.properties");
-                Logger loggerERROR = LogManager.getLogger("ERROR");
+                org.apache.log4j.Logger loggerERROR = org.apache.log4j.LogManager.getLogger("ERROR");
                 loggerERROR.error(" Mensaje " + ex.getMensajeErrorSistema()+ " - " + ex.getSentenciaSQL()); 
             }
             //GestionVehiculos.
@@ -318,6 +297,9 @@ public class Menu {
     }
     private void buscarCoche()
     {
+        PropertyConfigurator.configure("maniobra\\log4j.properties");
+        org.apache.log4j.Logger loggerTRACE = org.apache.log4j.LogManager.getLogger("TRACE");
+        loggerTRACE.trace("buscar coche");
         int repeticion=1;
         while(repeticion==1)
         {
@@ -335,7 +317,7 @@ public class Menu {
             } catch (ExcepcionGestionVehiculos ex) {
                 System.out.println(ex.getMensajeErrorUsuario());
                 PropertyConfigurator.configure("maniobra\\log4j.properties");
-                Logger loggerERROR = LogManager.getLogger("ERROR");
+                org.apache.log4j.Logger loggerERROR = org.apache.log4j.LogManager.getLogger("ERROR");
                 loggerERROR.error(" Mensaje " + ex.getMensajeErrorSistema()+ " - " + ex.getSentenciaSQL()); 
             }
             //GestionVehiculos.
@@ -357,13 +339,16 @@ public class Menu {
     }
     private void mostrarCoches()
     {
+        PropertyConfigurator.configure("maniobra\\log4j.properties");
+        org.apache.log4j.Logger loggerTRACE = org.apache.log4j.LogManager.getLogger("TRACE");
+        loggerTRACE.trace("mostrar coches");
         try {
             //sou print con los datos de la lista
             gs.leerCoches();
         } catch (ExcepcionGestionVehiculos ex) {
             System.out.println(ex.getMensajeErrorUsuario());
                 PropertyConfigurator.configure("maniobra\\log4j.properties");
-                Logger loggerERROR = LogManager.getLogger("ERROR");
+                org.apache.log4j.Logger loggerERROR = org.apache.log4j.LogManager.getLogger("ERROR");
                 loggerERROR.error(" Mensaje " + ex.getMensajeErrorSistema()+ " - " + ex.getSentenciaSQL()); 
         }
         System.out.println("%2s %s %9s %s \n, ID Matricula ");
@@ -406,6 +391,9 @@ public class Menu {
     }
     private void crearParte()
     {
+        PropertyConfigurator.configure("maniobra\\log4j.properties");
+        org.apache.log4j.Logger loggerTRACE = org.apache.log4j.LogManager.getLogger("TRACE");
+        loggerTRACE.trace("crear parte");
         Parte p;
         Coche c;
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -446,7 +434,7 @@ public class Menu {
             } catch (ExcepcionGestionVehiculos ex) {
                 System.out.println(ex.getMensajeErrorUsuario());
                 PropertyConfigurator.configure("maniobra\\log4j.properties");
-                Logger loggerERROR = LogManager.getLogger("ERROR");
+                org.apache.log4j.Logger loggerERROR = org.apache.log4j.LogManager.getLogger("ERROR");
                 loggerERROR.error(" Mensaje " + ex.getMensajeErrorSistema()+ " - " + ex.getSentenciaSQL()); 
             }
             //GestionVehiculos.
@@ -469,6 +457,9 @@ public class Menu {
     }
     private void eliminarParte()
     {
+        PropertyConfigurator.configure("maniobra\\log4j.properties");
+        org.apache.log4j.Logger loggerTRACE = org.apache.log4j.LogManager.getLogger("TRACE");
+        loggerTRACE.trace("eliminar parte");
         int repeticion=1;
         while(repeticion==1)
         {
@@ -485,7 +476,7 @@ public class Menu {
             } catch (ExcepcionGestionVehiculos ex) {
                 System.out.println(ex.getMensajeErrorUsuario());
                 PropertyConfigurator.configure("maniobra\\log4j.properties");
-                Logger loggerERROR = LogManager.getLogger("ERROR");
+                org.apache.log4j.Logger loggerERROR = org.apache.log4j.LogManager.getLogger("ERROR");
                 loggerERROR.error(" Mensaje " + ex.getMensajeErrorSistema()+ " - " + ex.getSentenciaSQL()); 
             }
             //GestionVehiculos.
@@ -507,6 +498,9 @@ public class Menu {
     }
     private void modificarParte()
     {
+        PropertyConfigurator.configure("maniobra\\log4j.properties");
+        org.apache.log4j.Logger loggerTRACE = org.apache.log4j.LogManager.getLogger("TRACE");
+        loggerTRACE.trace("modificar parte");
         Parte p;
         Coche c;
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -547,7 +541,7 @@ public class Menu {
             } catch (ExcepcionGestionVehiculos ex) {
                 System.out.println(ex.getMensajeErrorUsuario());
                 PropertyConfigurator.configure("maniobra\\log4j.properties");
-                Logger loggerERROR = LogManager.getLogger("ERROR");
+                org.apache.log4j.Logger loggerERROR = org.apache.log4j.LogManager.getLogger("ERROR");
                 loggerERROR.error(" Mensaje " + ex.getMensajeErrorSistema()+ " - " + ex.getSentenciaSQL()); 
             }
             //GestionVehiculos.
@@ -569,6 +563,9 @@ public class Menu {
     }
     private void buscarParte()
     {
+        PropertyConfigurator.configure("maniobra\\log4j.properties");
+        org.apache.log4j.Logger loggerTRACE = org.apache.log4j.LogManager.getLogger("TRACE");
+        loggerTRACE.trace("buscar parte");
         int repeticion=1;
         while(repeticion==1)
         {
@@ -586,7 +583,7 @@ public class Menu {
             } catch (ExcepcionGestionVehiculos ex) {
                 System.out.println(ex.getMensajeErrorUsuario());
                 PropertyConfigurator.configure("maniobra\\log4j.properties");
-                Logger loggerERROR = LogManager.getLogger("ERROR");
+                org.apache.log4j.Logger loggerERROR = org.apache.log4j.LogManager.getLogger("ERROR");
                 loggerERROR.error(" Mensaje " + ex.getMensajeErrorSistema()+ " - " + ex.getSentenciaSQL()); 
             }
             //GestionVehiculos.
@@ -608,6 +605,9 @@ public class Menu {
     }
     private void mostrarParte()
     {
+        PropertyConfigurator.configure("maniobra\\log4j.properties");
+        org.apache.log4j.Logger loggerTRACE = org.apache.log4j.LogManager.getLogger("TRACE");
+        loggerTRACE.trace("mostrar parte");
         {
         try {
             //sou print con los datos de la lista
@@ -615,11 +615,31 @@ public class Menu {
         } catch (ExcepcionGestionVehiculos ex) {
             System.out.println(ex.getMensajeErrorUsuario());
                 PropertyConfigurator.configure("maniobra\\log4j.properties");
-                Logger loggerERROR = LogManager.getLogger("ERROR");
+                org.apache.log4j.Logger loggerERROR = org.apache.log4j.LogManager.getLogger("ERROR");
                 loggerERROR.error(" Mensaje " + ex.getMensajeErrorSistema()+ " - " + ex.getSentenciaSQL()); 
         }
         System.out.println("%2s %s %9s %s \n, ID Matricula ");
     }
     }
-    
+    public static boolean esRepuesta(String s)
+    {
+        return s.charAt(0)=='s' || s.charAt(0)=='n';
+    }
+    public static boolean esEntero(String s) {
+        try { 
+            Integer.parseInt(s); 
+        } catch(NumberFormatException e) { 
+            return false; 
+        }
+        return true;
+    }
+    public static boolean esFecha(String s) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        try { 
+            sdf.parse(s);
+        } catch (ParseException e) {
+            return false;
+        }
+        return true;
+    }
 }
