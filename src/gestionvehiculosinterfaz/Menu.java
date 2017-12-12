@@ -28,7 +28,10 @@ public class Menu {
         this.gs = new GestionVehiculos();
     }
     
-    
+    /**
+     * Crea el menu principal
+     * @author Diego Fernández Díaz
+     */
     public void menuPrincipal()
     {
         int opcion;
@@ -55,6 +58,10 @@ public class Menu {
             }
         }while(salida);
     }
+    /**
+     * Crea el menu de la gestion de coches
+     * @author Diego Fernández Díaz
+     */
     private void menuCoches()
     {
         int opcion;
@@ -91,6 +98,10 @@ public class Menu {
             }
         }while(salida);
     }
+    /**
+     * Crea un coche en la base de datos
+     * @author Diego Fernández Díaz
+     */
     private void crearCoche()
     {
         PropertyConfigurator.configure("maniobra\\log4j.properties");
@@ -117,12 +128,12 @@ public class Menu {
             }
             int cc = Integer.parseInt(cilindrada);
             System.out.print("introduzca el año del coche: ");
-            String año = teclado.nextLine();
-            while (!esEntero(año)) {
+            String ano = teclado.nextLine();
+            while (!esEntero(ano)) {
                 System.out.print("Dato erróneo. Introduce de nuevo el ID del coche: ");
-                año = teclado.nextLine();
+                ano = teclado.nextLine();
             }
-            int añoc = Integer.parseInt(año);
+            int anoc = Integer.parseInt(ano);
             System.out.print("Introduzca el numero de bastidor del coche: ");
             String numBastidor= teclado.nextLine();
             System.out.print("introduzca el precio de mercado del coche: ");
@@ -132,7 +143,7 @@ public class Menu {
                 precio = teclado.nextLine();
             }
             int precioMercado = Integer.parseInt(precio);
-            c = new Coche(0, matricula, marca, modelo, extras, cc, añoc, numBastidor, precioMercado);
+            c = new Coche(0, matricula, marca, modelo, extras, cc, anoc, numBastidor, precioMercado);
             try {
                 System.out.println("Coches introducidos "+gs.insertarCoche(c));
             } catch (ExcepcionGestionVehiculos ex) {
@@ -157,7 +168,10 @@ public class Menu {
             }
         }
     }
-    
+    /**
+     * Elimina un coche de la base de datos
+     * @author Diego Fernández Díaz
+     */
     private void eliminarCoche()
     {
         PropertyConfigurator.configure("maniobra\\log4j.properties");
@@ -197,7 +211,10 @@ public class Menu {
             }
         }
     }
-    
+    /**
+     * Modifica un coche en la base de datos
+     * @author Diego Fernández Díaz
+     */
     private void modificarCoche()
     {
         PropertyConfigurator.configure("maniobra\\log4j.properties");
@@ -270,6 +287,10 @@ public class Menu {
             }
         }
     }
+    /**
+     * Busca un coche en la base de datos y lo muestra
+     * @author Diego Fernández Díaz
+     */
     private void buscarCoche()
     {
         PropertyConfigurator.configure("maniobra\\log4j.properties");
@@ -314,6 +335,10 @@ public class Menu {
             }
         }
     }
+    /**
+     * Muestra todos los coches que hay en la base de datos
+     * @author Diego Fernández Díaz
+     */
     private void mostrarCoches()
     {
         PropertyConfigurator.configure("maniobra\\log4j.properties");
@@ -339,6 +364,10 @@ public class Menu {
         }
         
     }
+    /**
+     * Crea un menu para gestionar los partes
+     * @author Diego Fernández Díaz
+     */
     private void menuPartes()
     {
         int opcion;
@@ -375,6 +404,10 @@ public class Menu {
             }
         }while(salida);
     }
+    /**
+     * Crea un parte en la base de datos
+     * @author Diego Fernández Díaz
+     */
     private void crearParte()
     {
         PropertyConfigurator.configure("maniobra\\log4j.properties");
@@ -433,6 +466,10 @@ public class Menu {
         }
         
     }
+    /**
+     * Elimina un parte en la base de datos
+     * @author Diego Fernández Díaz
+     */
     private void eliminarParte()
     {
         PropertyConfigurator.configure("maniobra\\log4j.properties");
@@ -473,6 +510,10 @@ public class Menu {
             }
         }
     }
+    /**
+     * Modifica un parte en la base de datos
+     * @author Diego Fernández Díaz
+     */
     private void modificarParte()
     {
         PropertyConfigurator.configure("maniobra\\log4j.properties");
@@ -537,6 +578,10 @@ public class Menu {
             }
         }
     }
+    /**
+     * Busca un parte en la base de datos y lo muestra
+     * @author Diego Fernández Díaz
+     */
     private void buscarParte()
     {
         PropertyConfigurator.configure("maniobra\\log4j.properties");
@@ -581,6 +626,10 @@ public class Menu {
             }
         }
     }
+    /**
+     * Muestra todos los datos de la base de datos
+     * @author Diego Fernández Díaz
+     */
     private void mostrarParte()
     {
         PropertyConfigurator.configure("maniobra\\log4j.properties");
@@ -604,10 +653,22 @@ public class Menu {
             loggerERROR.error(" Mensaje " + ex.getMensajeErrorSistema()+ " - " + ex.getSentenciaSQL()); 
         }
     }
+    /**
+     * Comprueba si la respuesta que se ha dado es "s" o "n"
+     * @author Diego Fernández Díaz
+     * @param s Respuesta a comprobar
+     * @return Devuelve una variable booleana si es correcta la respuesta o no
+     */
     public static boolean esRepuesta(String s)
     {
         return s.charAt(0)=='s' || s.charAt(0)=='n';
     }
+    /**
+     * Comprueba si la cadena introducida es un numero entero o no
+     * @author Diego Fernández Díaz
+     * @param s La cadena a comprobar
+     * @return Devuelve una variable booleana si es un numero entero o no
+     */
     public static boolean esEntero(String s) {
         try { 
             Integer.parseInt(s); 
@@ -616,6 +677,12 @@ public class Menu {
         }
         return true;
     }
+    /**
+     * Comprueba si la cadena introducida es una fecha correcta
+     * @author Diego Fernández Díaz
+     * @param s La cadena a comprobar
+     * @return Devuelve una variable booleana si la fecha es correcta o no
+     */
     public static boolean esFecha(String s) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         try { 
